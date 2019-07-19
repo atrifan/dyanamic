@@ -4,7 +4,7 @@
 
 using namespace std;
 int main() {
-    void *hndl = dlopen("/usr/local/Cellar/go/1.12.5/src/dynamicLib/dynamic.so", RTLD_LAZY);
+    void *hndl = dlopen("/usr/local/Cellar/go/1.12.6/src/atrifan/dyanamic/out.so", RTLD_LAZY);
     if (hndl == NULL) {
         cerr << dlerror() << endl;
         exit(-1);
@@ -14,7 +14,7 @@ int main() {
     onRequest = (int (*)(int))dlsym(hndl, "onRequest");
     int result = onRequest(4);
     cout << result << endl;
-    hndl = dlopen("/Users/trifan/DEVELOPMENT/dynamic/test.so", RTLD_LAZY);
+    hndl = dlopen("/usr/local/Cellar/go/1.12.6/src/atrifan/dyanamic/test.so", RTLD_LAZY);
     if (hndl == NULL) {
         cerr << dlerror() << endl;
         exit(-1);
