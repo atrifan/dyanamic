@@ -1,12 +1,24 @@
 #include <iostream>
 #include <dlfcn.h>
+#include <stdarg.h>
 #include "generic.h"
 
 using namespace std;
 
-void A()
+void A(int count, ...)
 {
-    printf("I am function A\n");
+    va_list list;
+    int j = 0;
+
+    va_start(list, count);
+    for(j=0; j<count; j++)
+    {
+     printf("%s ", va_arg(list, char*));
+    }
+
+    va_end(list);
+
+    printf("\nI am function A\n");
 }
 
 int main() {
@@ -16,8 +28,8 @@ int main() {
         exit(-1);
     }
     //declare create signature
-    int (*onRequest)(int, void(*)());
-    onRequest = (int (*)(int, void(*)()))dlsym(hndl, "onRequest");
+    int (*onRequest)(int, void(*)(int, ...));
+    onRequest = (int (*)(int, void(*)(int, ...)))dlsym(hndl, "onRequest");
     int result = onRequest(4, &A);
     cout << result << endl;
     hndl = dlopen("./test.so", RTLD_LAZY);
