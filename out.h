@@ -69,7 +69,7 @@ extern "C" {
 #endif
 
 
-extern int onRequest(int p0);
+extern int onRequest(int p0, void* p1);
 
 #ifdef __cplusplus
 }

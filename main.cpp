@@ -3,18 +3,24 @@
 #include "generic.h"
 
 using namespace std;
+
+void A()
+{
+    printf("I am function A\n");
+}
+
 int main() {
-    void *hndl = dlopen("/usr/local/Cellar/go/1.12.6/src/atrifan/dyanamic/out.so", RTLD_LAZY);
+    void *hndl = dlopen("./out.so", RTLD_LAZY);
     if (hndl == NULL) {
         cerr << dlerror() << endl;
         exit(-1);
     }
     //declare create signature
-    int (*onRequest)(int);
-    onRequest = (int (*)(int))dlsym(hndl, "onRequest");
-    int result = onRequest(4);
+    int (*onRequest)(int, void(*)());
+    onRequest = (int (*)(int, void(*)()))dlsym(hndl, "onRequest");
+    int result = onRequest(4, &A);
     cout << result << endl;
-    hndl = dlopen("/usr/local/Cellar/go/1.12.6/src/atrifan/dyanamic/test.so", RTLD_LAZY);
+    hndl = dlopen("./test.so", RTLD_LAZY);
     if (hndl == NULL) {
         cerr << dlerror() << endl;
         exit(-1);
